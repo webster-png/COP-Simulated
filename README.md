@@ -1,77 +1,40 @@
-# React + TypeScript + Vite
+# COP — Common Operational Picture Prototype
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Een front-end prototype van een Common Operational Picture (COP) dashboard, gebouwd om de architectuur, interactielogica en UI-patronen te demonstreren die worden gebruikt in moderne operationele commandosystemen (zoals bij het Ministerie van Defensie).
 
-Currently, two official plugins are available:
+Dit project simuleert realtime situational awareness door eenheden te volgen, standaard militaire symbolen weer te geven en incidenten te beheren op een interactieve tactische kaart.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Live Demo
+Bekijk de live applicatie hier: **[https://cop-simulated.vercel.app/](https://cop-simulated.vercel.app/)**
 
-## React Compiler
+## ✨ Kernfunctionaliteit
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*   **Interactieve Tactische Kaart:** Een op Leaflet gebaseerde kaart met een donker, commandopost-thema, met ondersteuning voor meerdere in- en uitschakelbare kaartlagen (Eenheden, Incidenten, Trajecten).
+*   **Militaire Symbolen (APP-6):** Eenheden worden weergegeven met gestandaardiseerde militaire symbolen via `milsymbol`, met onderscheid naar affiliatie (Vriend, Vijand, Neutraal, Onbekend) en domein (Land, Lucht, Zee).
+*   **Gesimuleerde Realtime Tracking:** Eenheden bewegen dynamisch over de kaart via een gesimuleerde interval-hook, waarbij ze een visueel spoor van hun recente posities achterlaten.
+*   **Incidentenbeheer:** Incidenten worden geplot met een kleurgecodeerde ernst. Een ingebouwd algoritme stelt de gebruiker in staat om direct de *dichtstbijzijnde actieve eenheid* bij een incident te vinden en te markeren.
+*   **Filteren & Zoeken:** Gebruikers kunnen eenheden filteren op Affiliatie, Domein en Status, of zoeken op naam om snel specifieke middelen in een complexe omgeving te lokaliseren.
 
-## Expanding the ESLint configuration
+## 🛠️ Technische Stack & Architectuur
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+*   **Framework:** React 18 + TypeScript (opgezet met Vite)
+*   **State-management:** [Zustand](https://github.com/pmndrs/zustand) — Gekozen vanwege de lichtgewicht omvang en nauwkeurige selector-gebaseerde re-rendering (met behulp van `useShallow`), waardoor de kaart en UI performant blijven tijdens frequente positie-updates.
+*   **Kaartvisualisatie:** Leaflet & React-Leaflet.
+*   **Symbolen:** `react-leaflet-milsymbol` voor strikte APP-6 standaard weergave.
+*   **Styling:** Vanilla CSS met moderne CSS Grid/Flexbox, waarbij CSS-filters worden gebruikt om een donker tactisch kaartthema te creëren zonder afhankelijk te zijn van betaalde API-kaartlagen.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Projectstructuur
+*   `src/components/`: Herbruikbare UI-componenten (MapView, FilterBar, UnitList, etc.)
+*   `src/store/`: Centraal Zustand state-management
+*   `src/hooks/`: Custom hooks (zoals `useSimulatedTracking`, die eenvoudig kan worden vervangen door een echte WebSocket-verbinding)
+*   `src/utils/`: Wiskundige hulpfuncties (afstandsberekening, coördinaatverplaatsing)
+*   `src/data/`: Gesimuleerde JSON-data voor eenheden en incidenten
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚦 Aan de slag
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Om dit project lokaal te draaien:
 
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-# COP-Simulated
-# COP-Simulated
+1. Clone de repository:
+   ```bash
+   git clone https://github.com/jouwgebruikersnaam/COP-Simulated.git
+   cd COP-Simulated
